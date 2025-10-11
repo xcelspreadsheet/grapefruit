@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/grapefruit/static/css/main.85546945.css",
-    "main.js": "/grapefruit/static/js/main.b69cd521.js",
+    "main.css": "/grapefruit/static/css/main.161621c3.css",
+    "main.js": "/grapefruit/static/js/main.c893bbbc.js",
     "static/js/453.53e1044f.chunk.js": "/grapefruit/static/js/453.53e1044f.chunk.js",
     "static/media/CirrusCumulus.woff": "/grapefruit/static/media/CirrusCumulus.7e057024a772dc2033cf.woff",
     "static/media/logo.svg": "/grapefruit/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/grapefruit/index.html",
-    "main.85546945.css.map": "/grapefruit/static/css/main.85546945.css.map",
-    "main.b69cd521.js.map": "/grapefruit/static/js/main.b69cd521.js.map",
+    "main.161621c3.css.map": "/grapefruit/static/css/main.161621c3.css.map",
+    "main.c893bbbc.js.map": "/grapefruit/static/js/main.c893bbbc.js.map",
     "453.53e1044f.chunk.js.map": "/grapefruit/static/js/453.53e1044f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.85546945.css",
-    "static/js/main.b69cd521.js"
+    "static/css/main.161621c3.css",
+    "static/js/main.c893bbbc.js"
   ]
 }
