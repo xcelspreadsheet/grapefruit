@@ -7,8 +7,8 @@ import Works from './Works';
 function App() {
   return (
     <>
-      <Works />
       <About />
+      <Works />
     </>
   );
 }

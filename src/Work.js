@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView, useScroll } from 'framer-motion';
 
 const layoutTransitionIn = {
     layout: {
@@ -8,6 +8,66 @@ const layoutTransitionIn = {
       },
 }
 const Work = ({ work, setWorkDetail }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const ref = useRef(null)
+  const isInView = useInView(ref, { margin: "0px -50% 0px -50%" })
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end end"]
+  })
+
+  useEffect(() => {
+    const bounding = ref.current.getBoundingClientRect()
+    if (isInView) {
+      setIsExpanded(true)
+      setWorkDetail(work)
+    } else {
+      setIsExpanded(false)
+    }
+  }, [isInView])
+
+  return (
+    <motion.div ref={ref} className={"work-small-container" + (isInView ? " expanded" : "")}
+      animate={{ paddingLeft: isExpanded ? "1em" : 0, paddingRight: isExpanded ? "1em" : 0 }}
+      transition={{ duration: 0.3 }}
+    >
+    <div className="work-small">
+      {work.representations.map((representation, index) => (
+        <AnimatePresence>
+        {/* <div>small</div> */}
+        {/* <motion.div layout={"preserve-aspect"} layoutScroll layoutId={"work-representation-" + work.id + "-" + index} key={"work-representation-" + work.id + "-" + index} className="work-image"> */}
+        {representation.image_url && (
+          <motion.div
+            className="work-image"
+            // animate={{ width: isExpanded ? 75 : 50 }}
+            // transition={{ duration: 0.3 }}
+          >
+            <motion.img
+              src={representation.image_url}
+              alt={work.title}
+            />
+          </motion.div>
+        )}
+          {representation.text && (
+          <motion.div 
+            className="work-image work-text"
+            dangerouslySetInnerHTML={{ __html: representation.text }}
+            // animate={{ width: isExpanded ? 75 : 50 }}
+            // transition={{ duration: 0.3 }}
+          >
+
+          </motion.div>
+        )}
+        </AnimatePresence>
+      ))}
+    </div>  
+    </motion.div>
+  );
+};
+
+export default Work;
+
+const WorkSmall = ({ work, setWorkDetail }) => {
   const workHero = work.representations.find(
     (representation) => representation.image_url
   );
@@ -15,27 +75,28 @@ const Work = ({ work, setWorkDetail }) => {
   const workHeroIndex = work.representations.findIndex(
     (representation) => representation.image_url
   );
-
   return (
-    <div  onClick={() => setWorkDetail(work)} className="work">
-              {workHero && (
-        <motion.div transition={layoutTransitionIn} key={'work-representation-' + workHeroIndex + '-' + work.id} layout layoutId={'work-representation-' + workHeroIndex + '-' + work.id} className="work-hero-image">
-          <img src={workHero.image_url} />
-        </motion.div>
-      )}
-      <div className="work-title">
-        <motion.h2 transition={layoutTransitionIn} layout={"position"} layoutId={'work-title' + work.id}>{work.title}</motion.h2>
-        <div className="work-types">
-        {work.work_types.map((work_type) => (
-          <motion.div transition={layoutTransitionIn} layout key={"work_type-" + work_type.id + '-' + work.id} layoutId={"work_type-" + work_type.id + '-' + work.id}>
-            <div>{work_type.name}</div>
+    <div className="work-small">
+      {work.representations.map((representation, index) => (
+        
+        <AnimatePresence>
+        {/* <div>small</div> */}
+        {/* <motion.div layout={"preserve-aspect"} layoutScroll layoutId={"work-representation-" + work.id + "-" + index} key={"work-representation-" + work.id + "-" + index} className="work-image"> */}
+        {representation.image_url && (
+          <motion.div  className="work-image">
+            <motion.img
+                src={representation.image_url}
+                alt={work.title}
+              />
           </motion.div>
-        ))}
-      </div>
-        <motion.div transition={layoutTransitionIn} layout layoutId={'work-date-' + work.id} className="work-date">{work.date_descriptive}</motion.div>
-      </div>
+        )}
+                {representation.text && (
+          <motion.div style={{ backgroundColor: "white"}} className="work-image work-text" dangerouslySetInnerHTML={{ __html: representation.text }}>
+
+          </motion.div>
+        )}
+        </AnimatePresence>
+      ))}
     </div>
   );
 };
-
-export default Work;
